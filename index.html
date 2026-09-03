@@ -1,0 +1,3006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Smart City Dashboard — ISL/RWP</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+  rel="stylesheet"
+>
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<!-- Leaflet Map CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Leaflet Map JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =========================================
+       SIDEBAR
+  ========================================== -->
+
+  <aside class="sidebar">
+
+    <!-- NEW -->
+<div class="brand">
+  <img src="images/smartcity.jpg" alt="ISL/RWP Logo" class="brand-logo" />
+  <div class="brand-text">
+    <strong>ISL/RWP</strong>
+    <small>Control Grid</small>
+  </div>
+</div>
+
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+
+      <button class="nav-item active" data-page="overview">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+        </svg>
+
+        <span>Overview</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="traffic">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2a5 5 0 0 0-5 5v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 7V7a3 3 0 0 1 6 0v2H9z"/>
+        </svg>
+
+        <span>Traffic</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="environment">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C8 6 5 10.5 5 14a7 7 0 0 0 14 0c0-3.5-3-8-7-12z"/>
+        </svg>
+
+        <span>Environment</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="map">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M15 5.1 9 3 3 5.1v15L9 18l6 2.1 6-2.1v-15L15 5.1zM9 5.2l6 2.1v10.5l-6-2.1V5.2zM4.5 6.1 8 4.9v11.8l-3.5 1.2V6.1zm15 0v11.8l-3.5-1.2V4.9l3.5 1.2z"/>
+        </svg>
+
+        <span>City Map</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="insights">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.5H9V20z"/>
+        </svg>
+
+        <span>AI Insights</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="alerts">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L1 21h22L12 2zm0 5.5L19.5 19h-15L12 7.5zM11 10v5h2v-5h-2zm0 6.5v2h2v-2h-2z"/>
+        </svg>
+
+        <span>Alerts</span>
+
+        <span class="nav-badge" id="alertCount">0</span>
+
+      </button>
+
+
+      <button class="nav-item" data-page="cityops">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2 4 5v6c0 5.5 3.5 9.5 8 11 4.5-1.5 8-5.5 8-11V5l-8-3zm0 4.2 5 1.9v3.9c0 3.8-2.4 6.9-5 7.9-2.6-1-5-4.1-5-7.9V8.1l5-1.9z"/>
+        </svg>
+
+        <span>City Ops</span>
+
+      </button>
+
+    </nav>
+
+
+    <!-- SIDEBAR FOOTER -->
+    <div class="sidebar-footer">
+
+      <span class="status-dot"></span>
+
+      Live feed connected
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================
+       MAIN CONTENT
+  ========================================== -->
+
+  <main class="main">
+
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+      <div class="topbar-title">
+
+        <h1 id="pageTitle">City Overview</h1>
+
+        <p id="pageSub">
+          Islamabad &amp; Rawalpindi · unified sensor grid
+        </p>
+
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <!-- NEW: LIVE CONNECTION STATUS -->
+        <div class="live-indicator">
+
+          <span class="live-indicator-dot"></span>
+
+          <span>LIVE</span>
+
+        </div>
+
+
+        <div
+          class="clock"
+          id="clock"
+        >
+          --:--:--
+        </div>
+
+
+        <button
+          class="icon-btn"
+          id="themeToggle"
+          title="Toggle theme"
+          aria-label="Toggle light/dark theme"
+        >
+
+          <svg viewBox="0 0 24 24">
+            <path d="M12 4V2m0 20v-2M4 12H2m20 0h-2M5.6 5.6L4.2 4.2m15.6 15.6l-1.4-1.4M5.6 18.4l-1.4 1.4M18.4 5.6l1.4-1.4M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/>
+          </svg>
+
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- =======================================
+         OVERVIEW PAGE
+    ======================================== -->
+
+    <section
+      class="page active"
+      id="page-overview"
+    >
+
+
+      <!-- LIVE SYSTEM STATUS -->
+
+      <div
+        class="card system-status-card"
+        id="systemStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="systemStatusDot"
+            aria-hidden="true"
+          ></span>
+
+          <div>
+
+            <strong id="systemStatusText">
+              SYSTEM OPERATIONAL
+            </strong>
+
+            <small>
+              Live monitoring active
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="system-status-right">
+
+          <span class="muted">
+
+            Last updated:
+
+            <span id="lastUpdatedTime">
+              just now
+            </span>
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- CITY HEALTH SCORE -->
+
+      <div class="card health-card">
+
+        <div class="card-head">
+
+          <h3>City Health Score</h3>
+
+          <span class="muted">
+            Composite of air quality, traffic &amp; alerts
+          </span>
+
+        </div>
+
+
+        <div class="health-body">
+
+          <div class="health-gauge">
+
+            <svg viewBox="0 0 140 140">
+
+              <circle
+                class="health-gauge-bg"
+                cx="70"
+                cy="70"
+                r="54"
+              ></circle>
+
+              <circle
+                class="health-gauge-fill"
+                id="healthScoreCircle"
+                cx="70"
+                cy="70"
+                r="54"
+              ></circle>
+
+            </svg>
+
+
+            <div class="health-gauge-text">
+
+              <span id="healthScoreValue">
+                --
+              </span>
+
+              <small id="healthScoreLabel">
+                --
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="health-breakdown">
+
+            <div class="health-row">
+
+              <span>Environment</span>
+
+              <div class="health-bar-bg">
+
+                <div
+                  class="health-bar-fill air"
+                  id="healthAirBar"
+                ></div>
+
+              </div>
+
+              <strong id="healthAirVal">
+                --
+              </strong>
+
+            </div>
+
+
+            <div class="health-row">
+
+              <span>Traffic</span>
+
+              <div class="health-bar-bg">
+
+                <div
+                  class="health-bar-fill traffic"
+                  id="healthTrafficBar"
+                ></div>
+
+              </div>
+
+              <strong id="healthTrafficVal">
+                --
+              </strong>
+
+            </div>
+
+
+            <div class="health-row">
+
+              <span>Public Safety</span>
+
+              <div class="health-bar-bg">
+
+                <div
+                  class="health-bar-fill alert"
+                  id="healthAlertBar"
+                ></div>
+
+              </div>
+
+              <strong id="healthAlertVal">
+                --
+              </strong>
+
+            </div>
+
+
+            <div class="health-row">
+
+              <span>Infrastructure</span>
+
+              <div class="health-bar-bg">
+
+                <div
+                  class="health-bar-fill infra"
+                  id="healthInfraBar"
+                ></div>
+
+              </div>
+
+              <strong id="healthInfraVal">
+                --
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- KPI CARDS -->
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-cyan">
+
+          <span class="kpi-label">
+            Avg Air Quality Index
+          </span>
+
+          <span
+            class="kpi-value"
+            id="kpiAqi"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-status-badge"
+            id="kpiAqiStatus"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-trend"
+            id="kpiAqiTrend"
+          >
+            Live monitoring
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-amber">
+
+          <span class="kpi-label">
+            Traffic Congestion
+          </span>
+
+          <span
+            class="kpi-value"
+            id="kpiTraffic"
+          >
+            --%
+          </span>
+
+          <span
+            class="kpi-status-badge"
+            id="kpiTrafficStatus"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-trend"
+            id="kpiTrafficTrend"
+          >
+            Live monitoring
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-red">
+
+          <span class="kpi-label">
+            Active Alerts
+          </span>
+
+          <span
+            class="kpi-value"
+            id="kpiAlerts"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-status-badge"
+            id="kpiAlertsStatus"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-trend"
+            id="kpiAlertsTrend"
+          >
+            Live monitoring
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-green">
+
+          <span class="kpi-label">
+            Temperature (PKT)
+          </span>
+
+          <span
+            class="kpi-value"
+            id="kpiTemp"
+          >
+            --°C
+          </span>
+
+          <span
+            class="kpi-trend"
+            id="kpiHumidity"
+          >
+            Humidity --%
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- CITY-WISE STATUS -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>City-wise Status</h3>
+
+          <span class="muted">
+            Islamabad &amp; Rawalpindi · demo aggregation
+          </span>
+
+        </div>
+
+
+        <div class="city-status-grid">
+
+          <div class="city-status-block">
+
+            <div class="city-status-head">
+
+              <strong>Islamabad</strong>
+
+              <span
+                class="zone-status"
+                id="islOverallStatus"
+              >
+                --
+              </span>
+
+            </div>
+
+
+            <div class="city-status-metrics">
+
+              <div>
+                <span>AQI</span>
+                <strong id="islAqi">--</strong>
+              </div>
+
+              <div>
+                <span>Traffic</span>
+                <strong id="islTraffic">--%</strong>
+              </div>
+
+              <div>
+                <span>Alerts</span>
+                <strong id="islAlerts">--</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="city-status-block">
+
+            <div class="city-status-head">
+
+              <strong>Rawalpindi</strong>
+
+              <span
+                class="zone-status"
+                id="rwpOverallStatus"
+              >
+                --
+              </span>
+
+            </div>
+
+
+            <div class="city-status-metrics">
+
+              <div>
+                <span>AQI</span>
+                <strong id="rwpAqi">--</strong>
+              </div>
+
+              <div>
+                <span>Traffic</span>
+                <strong id="rwpTraffic">--%</strong>
+              </div>
+
+              <div>
+                <span>Alerts</span>
+                <strong id="rwpAlerts">--</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- AI CITY SUMMARY -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>AI City Summary</h3>
+
+          <span class="muted">
+            Auto-generated from live dashboard data
+          </span>
+
+        </div>
+
+        <p
+          class="city-summary-text"
+          id="citySummaryText"
+        >
+          Loading summary…
+        </p>
+
+      </div>
+
+
+      <!-- NEW: AI RECOMMENDED ACTIONS -->
+
+      <div class="card ai-recommendation-card">
+
+        <div class="card-head">
+
+          <div>
+
+            <h3>🤖 AI Recommended Actions</h3>
+
+            <span class="muted">
+              Recommended actions based on current city conditions
+            </span>
+
+          </div>
+
+          <span class="ai-badge">
+            AI ACTIVE
+          </span>
+
+        </div>
+
+
+        <div
+          class="ai-recommendation-grid"
+          id="aiRecommendationGrid"
+        ></div>
+
+      </div>
+
+
+      <!-- PRIORITY ALERTS -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Priority Alerts</h3>
+
+          <span class="muted">
+            Top active alerts, sorted by severity
+          </span>
+
+        </div>
+
+
+        <ul
+          class="alert-list priority-alerts-list"
+          id="priorityAlertsList"
+        ></ul>
+
+
+        <button
+          class="quick-action-btn"
+          id="viewAllAlertsBtn"
+          type="button"
+          aria-label="View all alerts on the Alerts page"
+        >
+          View All Alerts
+        </button>
+
+      </div>
+
+
+      <!-- QUICK ACTIONS -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Quick Actions</h3>
+
+          <span class="muted">
+            Jump to a section
+          </span>
+
+        </div>
+
+
+        <div class="quick-actions-grid">
+
+          <button
+            class="quick-action-btn"
+            type="button"
+            data-goto="traffic"
+            aria-label="Go to Traffic page"
+          >
+            🚦 View Traffic
+          </button>
+
+
+          <button
+            class="quick-action-btn"
+            type="button"
+            data-goto="map"
+            aria-label="Go to City Map page"
+          >
+            🗺️ Open City Map
+          </button>
+
+
+          <button
+            class="quick-action-btn"
+            type="button"
+            data-goto="alerts"
+            aria-label="Go to Alerts page"
+          >
+            ⚠️ View Alerts
+          </button>
+
+
+          <button
+            class="quick-action-btn"
+            type="button"
+            data-goto="insights"
+            aria-label="Go to AI Insights page"
+          >
+            🧠 AI Insights
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- CHARTS -->
+
+      <div class="grid-2">
+
+        <div class="card">
+
+          <div class="card-head">
+            <h3>Traffic Trend — Last 24h</h3>
+          </div>
+
+          <div class="chart-box">
+            <canvas id="trafficTrendChart"></canvas>
+          </div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-head">
+            <h3>AQI by Sector</h3>
+          </div>
+
+          <div class="chart-box">
+            <canvas id="aqiSectorChart"></canvas>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ZONE STATUS -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Zone Status Grid</h3>
+
+          <span class="muted">
+            15 sectors · live
+          </span>
+
+        </div>
+
+        <div
+          class="zone-grid"
+          id="zoneGrid"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         TRAFFIC PAGE
+    ======================================== -->
+
+    <section
+      class="page"
+      id="page-traffic"
+    >
+
+      <!-- TRAFFIC STATUS -->
+
+      <div
+        class="card system-status-card"
+        id="trafficStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="trafficStatusDot"
+            aria-hidden="true"
+          ></span>
+
+          <div>
+
+            <strong id="trafficStatusText">
+              -- TRAFFIC
+            </strong>
+
+            <small>
+              Overall traffic condition · live
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="system-status-right">
+
+          <span class="muted">
+
+            Most congested:
+
+            <strong id="trafficStatusMostCongested">
+              --
+            </strong>
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- TRAFFIC KPI SUMMARY -->
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-amber">
+
+          <span class="kpi-label">
+            Average Congestion
+          </span>
+
+          <span
+            class="kpi-value"
+            id="trafficKpiAvgCongestion"
+          >
+            --%
+          </span>
+
+          <span
+            class="kpi-status-badge"
+            id="trafficKpiAvgCongestionStatus"
+          >
+            --
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-cyan">
+
+          <span class="kpi-label">
+            Average Speed
+          </span>
+
+          <span
+            class="kpi-value"
+            id="trafficKpiAvgSpeed"
+          >
+            -- km/h
+          </span>
+
+          <span class="kpi-trend">
+            City-wide average
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-green">
+
+          <span class="kpi-label">
+            Total Vehicles
+          </span>
+
+          <span
+            class="kpi-value"
+            id="trafficKpiVehicles"
+          >
+            --
+          </span>
+
+          <span class="kpi-trend">
+            Per hour, all roads
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-red">
+
+          <span class="kpi-label">
+            Active Incidents
+          </span>
+
+          <span
+            class="kpi-value"
+            id="trafficKpiIncidents"
+          >
+            --
+          </span>
+
+          <span class="kpi-trend">
+            Reported today
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- MOST CONGESTED ROAD -->
+
+      <div class="card most-congested-card">
+
+        <div class="card-head">
+
+          <h3>Most Congested Road</h3>
+
+          <span class="muted">
+            Updates automatically with live data
+          </span>
+
+        </div>
+
+
+        <div class="most-congested-body">
+
+          <strong id="mostCongestedRoadName">
+            --
+          </strong>
+
+          <div class="most-congested-meta">
+
+            <span
+              class="kpi-value"
+              id="mostCongestedRoadPct"
+            >
+              --%
+            </span>
+
+            <span
+              class="badge"
+              id="mostCongestedRoadBadge"
+            >
+              --
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TRAFFIC INSIGHT -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Traffic Insight</h3>
+
+          <span class="muted">
+            Auto-generated from live road data
+          </span>
+
+        </div>
+
+        <p
+          class="city-summary-text"
+          id="trafficInsightText"
+        >
+          Loading insight…
+        </p>
+
+      </div>
+
+
+      <!-- TRAFFIC TABLE -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Major Roads — Live Congestion</h3>
+
+          <span
+            class="muted"
+            id="trafficUpdated"
+          >
+            updated just now
+          </span>
+
+        </div>
+
+
+        <div class="alert-controls">
+
+          <div
+            class="alert-filters"
+            id="trafficFilters"
+          >
+
+            <button
+              class="alert-filter-btn active"
+              data-congestion-filter="all"
+              type="button"
+            >
+              All
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-congestion-filter="light"
+              type="button"
+            >
+              Light
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-congestion-filter="moderate"
+              type="button"
+            >
+              Moderate
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-congestion-filter="heavy"
+              type="button"
+            >
+              Heavy
+            </button>
+
+          </div>
+
+
+          <input
+            type="text"
+            id="trafficSearchInput"
+            class="alert-search-input"
+            placeholder="Search roads…"
+            aria-label="Search roads by name or zone"
+          />
+
+        </div>
+
+
+        <table
+          class="data-table"
+          id="trafficTable"
+        >
+
+          <thead>
+
+            <tr>
+
+              <th>Road</th>
+              <th>Zone</th>
+              <th>Avg Speed</th>
+              <th>Vehicles/hr</th>
+              <th>Congestion</th>
+              <th>Status</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody></tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- HEATMAP + INCIDENTS -->
+
+      <div class="grid-2">
+
+        <div class="card">
+
+          <div class="card-head">
+            <h3>Congestion Heatmap (relative)</h3>
+          </div>
+
+          <div
+            class="heatmap"
+            id="heatmap"
+          ></div>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-head">
+            <h3>Incidents Today</h3>
+          </div>
+
+          <ul
+            class="incident-list"
+            id="incidentList"
+          ></ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         ENVIRONMENT PAGE
+    ======================================== -->
+
+    <section
+      class="page"
+      id="page-environment"
+    >
+
+      <!-- AQI STATUS -->
+
+      <div
+        class="card system-status-card"
+        id="envStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="envStatusDot"
+            aria-hidden="true"
+          ></span>
+
+          <div>
+
+            <strong id="envStatusText">
+              -- AIR QUALITY
+            </strong>
+
+            <small>
+              City-wide air quality condition · live
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="system-status-right">
+
+          <span class="muted">
+
+            Monitored zones:
+
+            <strong id="envMonitoredZonesCount">
+              --
+            </strong>
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ENVIRONMENT KPI CARDS -->
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-cyan">
+
+          <span class="kpi-label">
+            Average AQI
+          </span>
+
+          <span
+            class="kpi-value"
+            id="envKpiAvgAqi"
+          >
+            --
+          </span>
+
+          <span
+            class="kpi-status-badge"
+            id="envKpiAvgAqiStatus"
+          >
+            --
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-amber">
+
+          <span class="kpi-label">
+            Temperature
+          </span>
+
+          <span
+            class="kpi-value"
+            id="envKpiTemp"
+          >
+            --°C
+          </span>
+
+          <span class="kpi-trend">
+            Current reading
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-green">
+
+          <span class="kpi-label">
+            Humidity
+          </span>
+
+          <span
+            class="kpi-value"
+            id="envKpiHumidity"
+          >
+            --%
+          </span>
+
+          <span
+            class="kpi-trend"
+            id="envKpiWind"
+          >
+            Wind -- km/h
+          </span>
+
+        </div>
+
+
+        <div class="kpi-card glow-red">
+
+          <span class="kpi-label">
+            Monitored Zones
+          </span>
+
+          <span
+            class="kpi-value"
+            id="envKpiZoneCount"
+          >
+            --
+          </span>
+
+          <span class="kpi-trend">
+            Islamabad &amp; Rawalpindi
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- WORST / BEST AIR QUALITY -->
+
+      <div class="grid-2">
+
+        <!-- WORST -->
+
+        <div class="card most-congested-card">
+
+          <div class="card-head">
+
+            <h3>Worst Air Quality</h3>
+
+            <span class="muted">
+              Updates automatically with live data
+            </span>
+
+          </div>
+
+
+          <div class="most-congested-body">
+
+            <strong id="worstAqiZoneName">
+              --
+            </strong>
+
+            <div class="most-congested-meta">
+
+              <span
+                class="kpi-value"
+                id="worstAqiZoneValue"
+              >
+                --
+              </span>
+
+              <span
+                class="badge"
+                id="worstAqiZoneBadge"
+              >
+                --
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- BEST -->
+
+        <div class="card most-congested-card">
+
+          <div class="card-head">
+
+            <h3>Best Air Quality</h3>
+
+            <span class="muted">
+              Updates automatically with live data
+            </span>
+
+          </div>
+
+
+          <div class="most-congested-body">
+
+            <strong id="bestAqiZoneName">
+              --
+            </strong>
+
+            <div class="most-congested-meta">
+
+              <span
+                class="kpi-value"
+                id="bestAqiZoneValue"
+              >
+                --
+              </span>
+
+              <span
+                class="badge"
+                id="bestAqiZoneBadge"
+              >
+                --
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- AIR QUALITY INSIGHT -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Air Quality Insight</h3>
+
+          <span class="muted">
+            Auto-generated from live zone data
+          </span>
+
+        </div>
+
+        <p
+          class="city-summary-text"
+          id="envInsightText"
+        >
+          Loading insight…
+        </p>
+
+      </div>
+
+
+      <!-- ENVIRONMENT ALERTS -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Environment Alerts</h3>
+
+          <span class="muted">
+            AQI, pollution &amp; weather-related alerts
+          </span>
+
+        </div>
+
+        <ul
+          class="alert-list"
+          id="envAlertsList"
+        ></ul>
+
+      </div>
+
+
+      <!-- ZONE AQI GRID -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>Air Quality per Sector</h3>
+
+          <span
+            class="muted"
+            id="envZoneResultCount"
+          >
+            -- zone(s)
+          </span>
+
+        </div>
+
+
+        <!-- AQI FILTERS + SEARCH -->
+
+        <div class="alert-controls">
+
+          <div
+            class="alert-filters"
+            id="envFilters"
+          >
+
+            <button
+              class="alert-filter-btn active"
+              data-aqi-filter="all"
+              type="button"
+            >
+              All
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-aqi-filter="good"
+              type="button"
+            >
+              Good
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-aqi-filter="moderate"
+              type="button"
+            >
+              Moderate
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-aqi-filter="unhealthy"
+              type="button"
+            >
+              Unhealthy
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-aqi-filter="very-unhealthy"
+              type="button"
+            >
+              Very Unhealthy
+            </button>
+
+          </div>
+
+
+          <input
+            type="text"
+            id="envSearchInput"
+            class="alert-search-input"
+            placeholder="Search zones…"
+            aria-label="Search zones by name or city"
+          />
+
+        </div>
+
+
+        <!-- AQI ZONE CARDS -->
+
+        <div
+          class="aqi-grid"
+          id="aqiGrid"
+        ></div>
+
+      </div>
+
+
+      <!-- POLLUTANT + WEATHER -->
+
+      <div class="grid-2">
+
+        <!-- POLLUTANT CHART -->
+
+        <div class="card">
+
+          <div class="card-head">
+
+            <h3>
+              Pollutant Breakdown (Blue Area)
+            </h3>
+
+          </div>
+
+          <div class="chart-box">
+            <canvas id="pollutantChart"></canvas>
+          </div>
+
+        </div>
+
+
+        <!-- WEATHER -->
+
+        <div class="card weather-card">
+
+          <div class="card-head">
+
+            <h3>Weather Now</h3>
+
+          </div>
+
+
+          <div class="weather-body">
+
+            <div
+              class="weather-temp"
+              id="weatherTemp"
+            >
+              --°C
+            </div>
+
+
+            <div class="weather-details">
+
+              <div>
+
+                <span>Humidity</span>
+
+                <strong id="weatherHumidity">
+                  --%
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>Wind</span>
+
+                <strong id="weatherWind">
+                  -- km/h
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                <span>Condition</span>
+
+                <strong id="weatherCond">
+                  --
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+<!-- =======================================
+     CITY INTELLIGENCE MAP — CHUNK 6
+======================================== -->
+
+<section
+  class="page"
+  id="page-map"
+>
+
+  <!-- MAP HEADER -->
+  <div class="card city-intelligence-header">
+
+    <div class="map-header-content">
+
+      <div>
+
+        <div class="map-title-row">
+
+          <h2>
+            City Intelligence Map
+          </h2>
+
+          <span class="map-monitoring-status">
+            <span class="map-status-live-dot"></span>
+            Monitoring Active
+          </span>
+
+        </div>
+
+        <p class="map-page-subtitle">
+          Islamabad &amp; Rawalpindi · Live urban issue monitoring
+        </p>
+
+      </div>
+
+      <span
+        class="map-last-updated"
+        id="mapLastUpdated"
+      >
+        Updated just now
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- MAP CONTROLS + MAP -->
+  <div class="card map-card">
+
+    <!-- SEARCH + CITY FILTER -->
+    <div class="map-controls">
+
+      <div class="map-search-wrapper">
+
+        <label for="mapSearchSelect">
+          Jump to issue
+        </label>
+
+        <select
+          id="mapSearchSelect"
+          class="map-search-select"
+        >
+
+          <option value="">
+            Jump to an issue…
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="map-city-filter-wrapper">
+
+        <label for="mapCityFilter">
+          City
+        </label>
+
+        <select
+          id="mapCityFilter"
+          class="map-city-filter"
+        >
+
+          <option value="All">
+            All Cities
+          </option>
+
+          <option value="Islamabad">
+            Islamabad
+          </option>
+
+          <option value="Rawalpindi">
+            Rawalpindi
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- MAP AREA -->
+    <div class="map-layout">
+
+      <div
+        id="cityMap"
+        aria-label="Interactive Islamabad and Rawalpindi city intelligence map"
+      ></div>
+
+
+      <!-- MAP LEGEND / FILTERS -->
+      <aside class="map-legend">
+
+        <div class="map-legend-header">
+
+          <div>
+
+            <h4>
+              Issue Filters
+            </h4>
+
+            <span>
+              Toggle issue types
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Traffic"
+            checked
+          />
+
+          <span class="legend-dot traffic"></span>
+
+          <span>
+            Traffic
+          </span>
+
+        </label>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Garbage"
+            checked
+          />
+
+          <span class="legend-dot garbage"></span>
+
+          <span>
+            Garbage
+          </span>
+
+        </label>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Water Leakage"
+            checked
+          />
+
+          <span class="legend-dot water"></span>
+
+          <span>
+            Water Leakage
+          </span>
+
+        </label>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Electricity"
+            checked
+          />
+
+          <span class="legend-dot electricity"></span>
+
+          <span>
+            Electricity
+          </span>
+
+        </label>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Flood Risk"
+            checked
+          />
+
+          <span class="legend-dot flood"></span>
+
+          <span>
+            Flood Risk
+          </span>
+
+        </label>
+
+
+        <label class="legend-item filter-label">
+
+          <input
+            type="checkbox"
+            class="map-filter-checkbox"
+            data-type="Road Damage"
+            checked
+          />
+
+          <span class="legend-dot road"></span>
+
+          <span>
+            Road Damage
+          </span>
+
+        </label>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+
+  <!-- MAP STATISTICS -->
+  <div class="map-summary-grid">
+
+    <!-- TOTAL ISSUES -->
+    <div class="map-summary-card">
+
+      <span class="summary-icon">
+        📍
+      </span>
+
+      <div>
+
+        <span class="muted">
+          Total Issues
+        </span>
+
+        <strong id="mapTotalIssues">
+          0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIVE ISSUES -->
+    <div class="map-summary-card">
+
+      <span class="summary-icon">
+        🟢
+      </span>
+
+      <div>
+
+        <span class="muted">
+          Active Issues
+        </span>
+
+        <strong id="mapActiveIssues">
+          0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- CRITICAL ISSUES -->
+    <div class="map-summary-card">
+
+      <span class="summary-icon">
+        🚨
+      </span>
+
+      <div>
+
+        <span class="muted">
+          Critical Issues
+        </span>
+
+        <strong id="mapCriticalIssues">
+          0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- TRAFFIC MONITORING -->
+    <div class="map-summary-card">
+
+      <span class="summary-icon">
+        🚦
+      </span>
+
+      <div>
+
+        <span class="muted">
+          Traffic Monitoring
+        </span>
+
+        <strong id="mapTrafficCount">
+          0
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- EXISTING CITY INTELLIGENCE -->
+  <div class="grid-2 map-bottom-grid">
+
+    <!-- CRITICAL AREAS -->
+    <div class="card">
+
+      <div class="card-head">
+
+        <div>
+
+          <h3>
+            Critical Areas
+          </h3>
+
+          <span class="muted">
+            Highest-severity locations
+          </span>
+
+        </div>
+
+        <span class="ai-badge">
+          PRIORITY
+        </span>
+
+      </div>
+
+
+      <div
+        class="critical-areas-list"
+        id="criticalAreasList"
+      ></div>
+
+    </div>
+
+
+    <!-- NETWORK STATUS -->
+    <div class="card map-network-card">
+
+      <div class="card-head">
+
+        <div>
+
+          <h3>
+            City Monitoring Network
+          </h3>
+
+          <span class="muted">
+            Demo monitoring infrastructure
+          </span>
+
+        </div>
+
+        <span class="map-network-status">
+          ONLINE
+        </span>
+
+      </div>
+
+
+      <div class="network-metrics">
+
+        <div class="network-metric">
+
+          <span>
+            🌫️ Air Quality Zones
+          </span>
+
+          <strong>
+            15
+          </strong>
+
+        </div>
+
+
+        <div class="network-metric">
+
+          <span>
+            🚦 Traffic Roads
+          </span>
+
+          <strong>
+            7
+          </strong>
+
+        </div>
+
+
+        <div class="network-metric">
+
+          <span>
+            📡 Sensor Network
+          </span>
+
+          <strong>
+            98.6%
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <p class="map-demo-note">
+        Demo monitoring data for Islamabad &amp; Rawalpindi.
+        Values are simulated and are not official government
+        or live sensor readings.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+      <!-- =======================================
+           AI INSIGHTS & PREDICTIONS PAGE
+      ======================================== -->
+
+    <section
+      class="page"
+      id="page-insights"
+    >
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>AI Insights</h3>
+
+          <span class="muted">
+            Auto-generated from live sensor data
+          </span>
+
+        </div>
+
+        <ul
+          class="insight-list"
+          id="insightsList"
+        ></ul>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>
+            Traffic Forecast — Next 4 Hours
+          </h3>
+
+          <span class="muted">
+            AI trend projection
+          </span>
+
+        </div>
+
+        <div class="chart-box">
+          <canvas id="predictionChart"></canvas>
+        </div>
+
+        <div
+          class="forecast-grid"
+          id="forecastGrid"
+        ></div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>
+            AQI Forecast — Worst Zones
+          </h3>
+
+          <span class="muted">
+            Projected by evening
+          </span>
+
+        </div>
+
+        <ul
+          class="forecast-list"
+          id="aqiForecastList"
+        ></ul>
+
+      </div>
+
+
+      <!-- FLOOD PREDICTION -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>🌊 Flood Risk Prediction</h3>
+
+          <span class="muted">
+            Based on drainage capacity &amp; rainfall risk
+          </span>
+
+        </div>
+
+        <ul
+          class="risk-list"
+          id="floodList"
+        ></ul>
+
+      </div>
+
+
+      <!-- WASTE PREDICTION -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>🗑️ Waste Overflow Prediction</h3>
+
+          <span class="muted">
+            Based on fill level &amp; collection schedule
+          </span>
+
+        </div>
+
+        <ul
+          class="risk-list"
+          id="wasteList"
+        ></ul>
+
+      </div>
+
+
+      <!-- WATER LEAKAGE PREDICTION -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>💧 Water Leakage Prediction</h3>
+
+          <span class="muted">
+            Based on pipe age, history &amp; pressure
+          </span>
+
+        </div>
+
+        <ul
+          class="risk-list"
+          id="waterLeakList"
+        ></ul>
+
+      </div>
+
+
+      <!-- NEW: AI DECISION CENTER -->
+
+      <div class="card ai-decision-card">
+
+        <div class="card-head">
+
+          <div>
+
+            <h3>🧠 AI Decision Center</h3>
+
+            <span class="muted">
+              Priority actions for city management
+            </span>
+
+          </div>
+
+          <span class="ai-badge">
+            PRIORITY ENGINE
+          </span>
+
+        </div>
+
+
+        <div
+          class="decision-list"
+          id="decisionList"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         ALERTS PAGE
+    ======================================== -->
+
+    <section
+      class="page"
+      id="page-alerts"
+    >
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>
+            Active Alerts &amp; Notifications
+          </h3>
+
+          <span
+            class="muted"
+            id="alertResultCount"
+          >
+            -- alert(s)
+          </span>
+
+        </div>
+
+
+        <div class="alert-controls">
+
+          <div class="alert-filters">
+
+            <button
+              class="alert-filter-btn active"
+              data-filter="all"
+            >
+              All
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-filter="high"
+            >
+              High
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-filter="medium"
+            >
+              Medium
+            </button>
+
+            <button
+              class="alert-filter-btn"
+              data-filter="low"
+            >
+              Low
+            </button>
+
+          </div>
+
+
+          <input
+            type="text"
+            id="alertSearchInput"
+            class="alert-search-input"
+            placeholder="Search alerts…"
+          />
+
+        </div>
+
+
+        <ul
+          class="alert-list"
+          id="alertList"
+        ></ul>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         FLOOD + WASTE + WATER — CHUNK 8
+    ======================================== -->
+
+    <section
+      class="page"
+      id="page-cityops"
+    >
+
+      <!-- CROSS-MODULE CITY HEALTH -->
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>🏙️ City Infrastructure Health</h3>
+
+          <span class="muted">
+            Flood · Waste · Water — combined snapshot
+          </span>
+
+        </div>
+
+        <div
+          class="ops-health-grid"
+          id="opsHealthGrid"
+        ></div>
+
+      </div>
+
+
+      <!-- ================= FLOOD ================= -->
+
+      <div
+        class="card system-status-card"
+        id="floodStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="floodStatusDot"
+          ></span>
+
+          <div>
+
+            <strong id="floodStatusText">
+              -- FLOOD RISK
+            </strong>
+
+            <small>
+              Rainfall + drainage condition · demo
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="system-status-right">
+
+          <span class="muted">
+            Last updated: <span id="floodLastUpdated">just now</span>
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-cyan">
+          <span class="kpi-label">Water Level</span>
+          <span class="kpi-value" id="floodKpiWaterLevel">--%</span>
+          <span class="kpi-trend">City-wide average</span>
+        </div>
+
+        <div class="kpi-card glow-amber">
+          <span class="kpi-label">Rainfall</span>
+          <span class="kpi-value" id="floodKpiRainfall">-- mm</span>
+          <span class="kpi-trend">Last 24h · demo</span>
+        </div>
+
+        <div class="kpi-card glow-red">
+          <span class="kpi-label">Blocked Drains</span>
+          <span class="kpi-value" id="floodKpiBlocked">--</span>
+          <span class="kpi-trend">Reported</span>
+        </div>
+
+        <div class="kpi-card glow-green">
+          <span class="kpi-label">Critical Zones</span>
+          <span class="kpi-value" id="floodKpiCritical">--</span>
+          <span class="kpi-trend">Needs attention</span>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>🌊 Flood-Prone Areas</h3>
+
+          <span class="muted" id="floodResultCount">
+            -- area(s)
+          </span>
+
+        </div>
+
+        <div class="table-wrapper">
+
+          <table class="data-table" id="floodTable">
+
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>City</th>
+                <th>Risk</th>
+                <th>Water Level</th>
+                <th>Drainage</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= WASTE ================= -->
+
+      <div
+        class="card system-status-card"
+        id="wasteStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="wasteStatusDot"
+          ></span>
+
+          <div>
+
+            <strong id="wasteStatusText">
+              -- WASTE COLLECTION
+            </strong>
+
+            <small>
+              Daily collection efficiency · demo
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="system-status-right">
+
+          <span class="muted">
+            Trucks active: <strong id="wasteActiveTrucks">--</strong>
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-cyan">
+          <span class="kpi-label">Total Waste</span>
+          <span class="kpi-value" id="wasteKpiTotal">-- t/day</span>
+          <span class="kpi-trend">Generated city-wide</span>
+        </div>
+
+        <div class="kpi-card glow-green">
+          <span class="kpi-label">Collected</span>
+          <span class="kpi-value" id="wasteKpiCollected">-- t/day</span>
+          <span class="kpi-trend" id="wasteKpiEfficiency">--% efficiency</span>
+        </div>
+
+        <div class="kpi-card glow-red">
+          <span class="kpi-label">Overflowing Bins</span>
+          <span class="kpi-value" id="wasteKpiOverflow">--</span>
+          <span class="kpi-trend">Needs pickup</span>
+        </div>
+
+        <div class="kpi-card glow-amber">
+          <span class="kpi-label">Pending Pickups</span>
+          <span class="kpi-value" id="wasteKpiPending">--</span>
+          <span class="kpi-trend">Queued</span>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+          <h3>Daily Collection Progress</h3>
+        </div>
+
+        <div class="heat-row">
+
+          <span>Collection</span>
+
+          <div class="heat-bar-bg">
+            <div
+              class="heat-bar-fill"
+              id="wasteProgressBar"
+              style="width:0%"
+            ></div>
+          </div>
+
+          <span
+            id="wasteProgressLabel"
+            style="width:50px;text-align:right;color:var(--text)"
+          >
+            0%
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>🗑️ Waste Zone Monitoring</h3>
+
+          <span class="muted" id="wasteResultCount">
+            -- zone(s)
+          </span>
+
+        </div>
+
+        <div class="table-wrapper">
+
+          <table class="data-table" id="wasteTable">
+
+            <thead>
+              <tr>
+                <th>Area</th>
+                <th>City</th>
+                <th>Waste Level</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Last Collection</th>
+              </tr>
+            </thead>
+
+            <tbody></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= WATER ================= -->
+
+      <div
+        class="card system-status-card"
+        id="waterStatusCard"
+      >
+
+        <div class="system-status-left">
+
+          <span
+            class="system-status-dot"
+            id="waterStatusDot"
+          ></span>
+
+          <div>
+
+            <strong id="waterStatusText">
+              -- WATER SUPPLY
+            </strong>
+
+            <small>
+              Supply availability + leakage · demo
+            </small>
+
+          </div>
+
+        </div>
+
+        <div class="system-status-right">
+
+          <span class="muted">
+            Active leaks: <strong id="waterActiveLeaks">--</strong>
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card glow-cyan">
+          <span class="kpi-label">Daily Demand</span>
+          <span class="kpi-value" id="waterKpiDemand">-- ML</span>
+          <span class="kpi-trend">City-wide</span>
+        </div>
+
+        <div class="kpi-card glow-green">
+          <span class="kpi-label">Current Supply</span>
+          <span class="kpi-value" id="waterKpiSupply">-- ML</span>
+          <span class="kpi-trend" id="waterKpiAvailability">--% availability</span>
+        </div>
+
+        <div class="kpi-card glow-red">
+          <span class="kpi-label">Reported Today</span>
+          <span class="kpi-value" id="waterKpiReported">--</span>
+          <span class="kpi-trend">New leak reports</span>
+        </div>
+
+        <div class="kpi-card glow-amber">
+          <span class="kpi-label">Resolved</span>
+          <span class="kpi-value" id="waterKpiResolved">--</span>
+          <span class="kpi-trend">This week</span>
+        </div>
+
+      </div>
+
+
+      <div class="grid-2">
+
+        <div class="card">
+          <div class="card-head"><h3>Islamabad Supply</h3></div>
+          <div class="most-congested-body">
+            <strong id="waterIslPct">--%</strong>
+            <span class="badge" id="waterIslBadge">--</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Rawalpindi Supply</h3></div>
+          <div class="most-congested-body">
+            <strong id="waterRwpPct">--%</strong>
+            <span class="badge" id="waterRwpBadge">--</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <h3>💧 Water Leakage Monitoring</h3>
+
+          <span class="muted" id="waterResultCount">
+            -- leak(s)
+          </span>
+
+        </div>
+
+        <div class="table-wrapper">
+
+          <table class="data-table" id="waterTable">
+
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>City</th>
+                <th>Severity</th>
+                <th>Est. Loss</th>
+                <th>Status</th>
+                <th>Reported</th>
+              </tr>
+            </thead>
+
+            <tbody></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <p class="map-demo-note">
+        Flood, waste and water figures are simulated demo data for illustration
+        and are not live sensor or government readings.
+      </p>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =========================================
+     AI CHAT ASSISTANT WIDGET
+========================================= -->
+
+<button
+  id="chatToggleBtn"
+  class="chat-toggle-btn"
+  title="City Assistant"
+  aria-label="Open City Assistant"
+>
+
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+  >
+
+    <path
+      fill="currentColor"
+      d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zM9 20a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.5H9V20z"
+    />
+
+  </svg>
+
+</button>
+
+
+<div
+  id="chatPanel"
+  class="chat-panel"
+>
+
+  <div class="chat-header">
+
+    <div class="chat-header-title">
+
+      <span class="chat-status-dot"></span>
+
+      <div>
+
+        <strong>City Assistant</strong>
+
+        <small>
+          AI-powered · demo
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <button
+      id="chatCloseBtn"
+      class="chat-close-btn"
+      aria-label="Close City Assistant"
+    >
+      &times;
+    </button>
+
+  </div>
+
+
+    <div class="chat-suggestions">
+
+    <button class="chat-suggestion">City Summary</button>
+    <button class="chat-suggestion">Traffic Status</button>
+    <button class="chat-suggestion">Air Quality</button>
+    <button class="chat-suggestion">Critical Alerts</button>
+    <button class="chat-suggestion">Flood Risk</button>
+    <button class="chat-suggestion">Waste Status</button>
+    <button class="chat-suggestion">Water Status</button>
+
+  </div>
+
+
+  <div
+    id="chatBody"
+    class="chat-body"
+  ></div>
+
+
+  <div
+    id="chatTyping"
+    class="chat-typing"
+  >
+    City Assistant is typing…
+  </div>
+
+
+  <div class="chat-input-row">
+
+    <input
+      type="text"
+      id="chatInput"
+      class="chat-input"
+           placeholder="Ask about traffic, AQI, alerts, flood, waste or water…"
+      autocomplete="off"
+    />
+
+    <button
+      id="chatSendBtn"
+      class="chat-send-btn"
+      type="button"
+    >
+      Send
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     AI DECISION CENTER — FLOATING BUTTON + MODAL
+========================================= -->
+
+<button
+  id="decisionCenterBtn"
+  class="decision-fab"
+  title="AI Decision Center"
+  aria-label="Open AI Decision Center"
+  aria-haspopup="dialog"
+>
+  💡
+</button>
+
+
+<div
+  id="decisionCenterOverlay"
+  class="decision-overlay"
+></div>
+
+
+<div
+  id="decisionCenterModal"
+  class="decision-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="decisionCenterTitle"
+>
+
+  <div class="decision-modal-header">
+
+    <div>
+      <h2 id="decisionCenterTitle">AI Decision Center</h2>
+      <p class="decision-modal-subtitle">
+        Priority actions based on current city conditions
+      </p>
+    </div>
+
+    <button
+      id="decisionCenterCloseBtn"
+      class="decision-close-btn"
+      aria-label="Close AI Decision Center"
+    >
+      &times;
+    </button>
+
+  </div>
+
+
+  <div class="decision-modal-body">
+
+    <div class="decision-risk-row">
+
+      <div class="decision-risk-badge-wrap">
+        <span class="muted">CITY RISK</span>
+        <span id="decisionCityRisk" class="decision-risk-badge">--</span>
+      </div>
+
+      <span id="decisionActionCount" class="muted">
+        -- priority action(s) recommended
+      </span>
+
+    </div>
+
+
+    <div class="decision-status-grid" id="decisionStatusGrid"></div>
+
+
+    <div class="decision-section">
+
+      <h3>Top Priority Issues</h3>
+
+      <ol class="decision-issues-list" id="decisionIssuesList"></ol>
+
+    </div>
+
+
+    <div class="decision-section">
+
+      <h3>Recommended Actions</h3>
+
+      <div class="decision-actions-list" id="decisionActionsList"></div>
+
+      <p class="decision-disclaimer">
+        Simulated recommendations based on current dashboard demo data —
+        not official government decisions.
+      </p>
+
+    </div>
+
+
+    <div class="decision-section">
+
+      <h3>Quick Actions</h3>
+
+      <div class="decision-quick-grid">
+
+        <button class="quick-action-btn" data-decision-goto="alerts">
+          ⚠️ View Alerts
+        </button>
+
+        <button class="quick-action-btn" data-decision-goto="map">
+          🗺️ Open City Map
+        </button>
+
+        <button class="quick-action-btn" data-decision-goto="insights">
+          🧠 View AI Insights
+        </button>
+
+        <button class="quick-action-btn" data-decision-goto="cityops">
+          🌊 Flood / Waste / Water
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script src="js/data.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+<script src="js/chat.js"></script>
+
+</body>
+</html>
