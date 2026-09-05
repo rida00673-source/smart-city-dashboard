@@ -1,100 +1,97 @@
 # 🏙️ Smart City Dashboard
 
-### Intelligent Urban Monitoring System for Islamabad & Rawalpindi
+**Intelligent Urban Monitoring System for Islamabad & Rawalpindi**
 
-Smart City Dashboard is a web-based urban monitoring platform designed to visualize and analyze important city conditions across **Islamabad and Rawalpindi**.
+Smart City Dashboard is a web-based urban monitoring platform designed to visualize and analyze important city conditions across Islamabad and Rawalpindi.
 
-The system provides a centralized dashboard for monitoring **traffic, environment, air quality, infrastructure, waste, water leakage, electricity, flood risk, road conditions, alerts, and city zones**.
+The system provides a centralized dashboard for monitoring traffic, environment, air quality, infrastructure, waste, water leakage, electricity, flood risk, road conditions, alerts, and city zones.
 
-It also includes an **AI-powered insights layer** that converts available city data into understandable insights, risk indicators, comparisons, and priority areas.
+It also includes an AI-powered insights layer that converts available city data into understandable insights, risk indicators, comparisons, and priority areas.
 
 ---
 
 ## 🔗 Live Demo
 
-**Frontend:**
-https://rida00673-source.github.io/smart-city-dashboard/
+**Frontend:** [https://rida00673-source.github.io/smart-city-dashboard/](https://rida00673-source.github.io/smart-city-dashboard/)
 
 > ⚠️ **Note:** This project currently uses simulated/demo data for demonstration and portfolio purposes. It does not represent official real-time government or sensor data.
+
+---
+
+## 📸 Screenshots
+
+| City Overview | City Intelligence Map |
+|---|---|
+| ![Dashboard Overview](images/overview.png) | ![City Map](images/map.png) |
+
+| Traffic Monitoring | AI Insights |
+|---|---|
+| ![Traffic](images/traffic.png) | ![AI Insights](images/ai-insights.png) |
 
 ---
 
 ## ✨ Features
 
 ### 📊 Smart City Overview
-
-* Overall city health indicators
-* Air quality monitoring
-* Traffic congestion monitoring
-* Temperature information
-* Active alerts
-* Islamabad vs Rawalpindi comparison
+- Overall city health indicators
+- Air quality monitoring
+- Traffic congestion monitoring
+- Temperature information
+- Active alerts
+- Islamabad vs Rawalpindi comparison
 
 ### 🚦 Traffic Monitoring
-
-* Traffic congestion visualization
-* Road-wise traffic information
-* Interactive charts
-* Traffic condition analysis
+- Traffic congestion visualization
+- Road-wise traffic information
+- Interactive charts
+- Traffic condition analysis
 
 ### 🌤️ Environment & Air Quality
-
-* AQI monitoring
-* Environmental condition analysis
-* Zone-based environmental information
-* Air quality visualization
+- AQI monitoring
+- Environmental condition analysis
+- Zone-based environmental information
+- Air quality visualization
 
 ### 🗺️ Interactive City Intelligence Map
-
 The interactive map provides location-based monitoring for:
-
-* 🚦 Traffic
-* 🗑️ Garbage
-* 💧 Water Leakage
-* ⚡ Electricity
-* 🌊 Flood Risk
-* 🛣️ Road Damage
+- 🚦 Traffic
+- 🗑️ Garbage
+- 💧 Water Leakage
+- ⚡ Electricity
+- 🌊 Flood Risk
+- 🛣️ Road Damage
 
 Users can explore different zones and identify areas that require attention.
 
 ### 🤖 AI-Powered Insights
-
 The AI intelligence layer generates data-based insights including:
-
-* High-risk zones
-* Traffic insights
-* Environmental insights
-* City comparisons
-* Overall city health
-* Priority areas
-* Data-based predictions
+- High-risk zones
+- Traffic insights
+- Environmental insights
+- City comparisons
+- Overall city health
+- Priority areas
+- Data-based predictions
 
 ### 🚨 Smart Alerts
-
 The dashboard identifies important city conditions and presents alerts to help users quickly recognize potential problems.
 
 ### 🌊 Flood Risk Monitoring
-
 Provides visualization of areas with potential flood-related risks.
 
 ### 🗑️ Waste Management
-
 Allows monitoring of waste-related conditions across different city zones.
 
 ### 💧 Water Leakage Monitoring
-
 Helps identify areas where water leakage issues may require attention.
 
 ### ⚡ Electricity Monitoring
-
 Provides city-zone information related to electricity conditions.
 
 ### 🛣️ Road Damage Monitoring
-
 Highlights road-related problems and helps identify priority areas.
 
 ### 💬 Smart City Assistant
-
 A smart assistant interface designed to help users interact with city information and understand dashboard insights.
 
 ---
@@ -102,9 +99,8 @@ A smart assistant interface designed to help users interact with city informatio
 ## 🏙️ Supported Cities
 
 The dashboard focuses on:
-
-**Islamabad (ISL)**
-**Rawalpindi (RWP)**
+- **Islamabad (ISL)**
+- **Rawalpindi (RWP)**
 
 The system uses zone-based information to provide a more detailed view of urban conditions.
 
@@ -115,14 +111,13 @@ The system uses zone-based information to provide a more detailed view of urban 
 The dashboard uses interactive visualizations to make complex city information easier to understand.
 
 Visualization includes:
-
-* Traffic charts
-* Environmental charts
-* AQI information
-* City comparisons
-* Health scores
-* Forecast/prediction visualizations
-* Alert indicators
+- Traffic charts
+- Environmental charts
+- AQI information
+- City comparisons
+- Health scores
+- Forecast/prediction visualizations
+- Alert indicators
 
 ---
 
@@ -137,50 +132,44 @@ The system can analyze:
 to produce an overall understanding of city health.
 
 Example insights include:
-
-* Which zone has the highest risk
-* Which city is performing better
-* Current traffic conditions
-* Environmental concerns
-* Priority areas requiring attention
+- Which zone has the highest risk
+- Which city is performing better
+- Current traffic conditions
+- Environmental concerns
+- Priority areas requiring attention
 
 ---
 
 ## 🛠️ Technologies
 
-### Frontend
+**Frontend**
+- HTML5
+- CSS3
+- JavaScript
 
-* HTML5
-* CSS3
-* JavaScript
+**Libraries**
+- Chart.js
+- Leaflet.js
+- Google Fonts
 
-### Libraries
+**Backend**
+- Node.js
+- Express.js
 
-* Chart.js
-* Leaflet.js
-* Google Fonts
+**Database**
+- MongoDB
+- MongoDB Atlas
 
-### Backend
-
-* Node.js
-* Express.js
-
-### Database
-
-* MongoDB
-* MongoDB Atlas
-
-### Deployment
-
-* GitHub Pages — Frontend
-* Railway — Backend
-* MongoDB Atlas — Database
+**Deployment**
+- GitHub Pages — Frontend
+- Railway — Backend
+- MongoDB Atlas — Database
 
 ---
 
 ## 🏗️ System Architecture
 
-```text
+```
                     👤 User
                        │
                        ▼
@@ -206,7 +195,7 @@ Example insights include:
 
 ## 📂 Project Structure
 
-```text
+```
 Smart-City-Dashboard/
 │
 ├── frontend/
@@ -227,72 +216,51 @@ Smart-City-Dashboard/
 └── README.md
 ```
 
-> Project structure may change as additional features and backend modules are added.
+*Project structure may change as additional features and backend modules are added.*
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
 Make sure the following are installed:
-
-* Node.js
-* npm
-* MongoDB or MongoDB Atlas
-* VS Code
-
----
+- Node.js
+- npm
+- MongoDB or MongoDB Atlas
+- VS Code
 
 ### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/rida00673-source/smart-city-dashboard.git
 cd smart-city-dashboard
 ```
 
----
-
 ### 2. Install Backend Dependencies
-
 ```bash
 cd backend
 npm install
 ```
 
----
-
 ### 3. Configure Environment Variables
-
 Create a `.env` file inside the `backend` folder:
-
-```env
+```
 MONGO_URI=your_mongodb_connection_string
 PORT=5000
 ```
-
 Never publish your actual MongoDB credentials.
 
----
-
 ### 4. Start the Backend
-
 ```bash
 npm start
 ```
-
 The backend API will run on the configured port.
 
----
-
 ### 5. Run the Frontend
-
-Open the `frontend` folder in VS Code and launch `index.html` using **Live Server**.
+Open the `frontend` folder in VS Code and launch `index.html` using Live Server.
 
 Alternatively, use the deployed version:
 
-**Live Demo:**
-https://rida00673-source.github.io/smart-city-dashboard/
+**Live Demo:** [https://rida00673-source.github.io/smart-city-dashboard/](https://rida00673-source.github.io/smart-city-dashboard/)
 
 ---
 
@@ -300,13 +268,12 @@ https://rida00673-source.github.io/smart-city-dashboard/
 
 Sensitive configuration files should never be committed to GitHub.
 
-Do **not** upload:
-
-* `.env`
-* MongoDB passwords
-* API keys
-* Private credentials
-* Authentication secrets
+Do not upload:
+- `.env`
+- MongoDB passwords
+- API keys
+- Private credentials
+- Authentication secrets
 
 Make sure `.env` is included in `.gitignore`.
 
@@ -327,38 +294,36 @@ This approach can help users quickly understand city conditions and identify are
 ## 🗺️ Future Improvements
 
 Planned improvements include:
-
-* [ ] Real-time IoT/sensor data integration
-* [ ] Advanced AI predictions
-* [ ] User authentication and administrator accounts
-* [ ] Push notifications for critical alerts
-* [ ] More detailed GIS-based city mapping
-* [ ] Mobile application
-* [ ] Advanced analytics and reporting
-* [ ] Real-time government/open-data integration
+- [ ] Real-time IoT/sensor data integration
+- [ ] Advanced AI predictions
+- [ ] User authentication and administrator accounts
+- [ ] Push notifications for critical alerts
+- [ ] More detailed GIS-based city mapping
+- [ ] Mobile application
+- [ ] Advanced analytics and reporting
+- [ ] Real-time government/open-data integration
 
 ---
 
 ## 👩‍💻 Developer
 
-**Developed independently as a Software Engineering project.**
+Developed independently as a Software Engineering project.
 
 The project was designed and developed to demonstrate skills in:
-
-* Frontend Development
-* JavaScript
-* Data Visualization
-* Interactive Maps
-* Backend API Development
-* Database Integration
-* AI-based Data Analysis
-* Deployment
+- Frontend Development
+- JavaScript
+- Data Visualization
+- Interactive Maps
+- Backend API Development
+- Database Integration
+- AI-based Data Analysis
+- Deployment
 
 ---
 
 ## 📄 License
 
-This project is created for **educational, portfolio, and demonstration purposes**.
+This project is created for educational, portfolio, and demonstration purposes.
 
 ---
 
