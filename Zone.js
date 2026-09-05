@@ -1,0 +1,36 @@
+const mongoose = require("mongoose");
+
+const zoneSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true
+        },
+
+        city: {
+            type: String,
+            required: true,
+            enum: ["ISL", "RWP"]
+        },
+
+        aqi: {
+            type: Number,
+            default: 0
+        },
+
+        trafficCongestion: {
+            type: Number,
+            default: 0
+        },
+
+        status: {
+            type: String,
+            default: "green"
+        }
+    },
+    {
+        timestamps: true
+    }
+);
+
+module.exports = mongoose.model("Zone", zoneSchema);
