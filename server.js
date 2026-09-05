@@ -27,7 +27,7 @@ app.use(express.json());
 // =====================================================
 
 mongoose
-    .connect("mongodb://127.0.0.1:27017/smart_city")
+.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/smart_city")
     .then(() => {
         console.log("MongoDB connected successfully!");
     })
