@@ -22,11 +22,11 @@ It also includes an AI-powered insights layer that converts available city data 
 
 | City Overview | City Intelligence Map |
 |---|---|
-| ![Dashboard Overview](images/overview.png) | ![City Map](images/map.png) |
+| ![Dashboard Overview](overview.png.png) | ![City Map](map.png.png) |
 
 | Traffic Monitoring | AI Insights |
 |---|---|
-| ![Traffic](images/traffic.png) | ![AI Insights](images/ai-insights.png) |
+| ![Traffic](traffic.png.png) | ![AI Insights](ai-insights.png.png) |
 
 ---
 
